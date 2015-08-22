@@ -4,7 +4,6 @@ using System.Collections;
 public class Milonov : MonoBehaviour
 {
 
-	public GameObject redEyesFace;
 	public GameObject defaultFace;
 	public GameObject star;
 
@@ -16,7 +15,6 @@ public class Milonov : MonoBehaviour
 		}
 		set {
 			star.GetComponent<SpriteRenderer> ().color = value;
-			redEyesFace.GetComponent<SpriteRenderer> ().color = value;
 			defaultFace.GetComponent<SpriteRenderer> ().color = value;
 		}
 	}
