@@ -10,6 +10,7 @@ public class Main : MonoBehaviour
 
 	const float TRACK_SPEED = .01f;
 
+	Dir monsterSpeed = new Dir ();
 	Layer monsterLayer;
 	Item monster;
 	List<Layer> layers = new List<Layer> ();
@@ -34,26 +35,6 @@ public class Main : MonoBehaviour
 
 	void Update ()
 	{
-		if (Time.frameCount % 8 == 0) {
-			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
-			layers.Add (layer);
-			layer.obj.transform.localEulerAngles = new Vector3 (0, 0, Random.Range (0, 360));
-			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
-				Random.value,
-				Random.value,
-				Random.value
-			);
-
-			if (Random.value < .2) {
-				Item item = new Item ();
-				item.obj = Instantiate (milonovPrefab) as GameObject;
-				item.obj.transform.SetParent (layer.obj.transform);
-				item.obj.transform.localPosition = H.RandomPointInCircle (5);
-				layer.items.Add (item);
-			}
-
-		}
-
 		trackTime += TRACK_SPEED;
 		while (trackTime >= 1) {
 			trackTime -= 1;
@@ -72,6 +53,18 @@ public class Main : MonoBehaviour
 			Mathf.Atan2 (Input.mousePosition.y / Screen.height - .5f, Input.mousePosition.x / Screen.width - .5f);
 
 		{
+			float dx = (Input.GetKey (KeyCode.D) ? 1 : 0) - (Input.GetKey (KeyCode.A) ? 1 : 0);
+			float dy = (Input.GetKey (KeyCode.W) ? 1 : 0) - (Input.GetKey (KeyCode.S) ? 1 : 0);
+			if (dx != 0 || dy != 0) {
+				monsterSpeed.x += .02f * dx;
+				monsterSpeed.y += .02f * dy;
+				monsterSpeed.p = Mathf.Min (1, monsterSpeed.p);
+			} else {
+				monsterSpeed.p = Mathf.Max (0, monsterSpeed.p - .1f);
+			}
+			monster.obj.transform.localPosition += new Vector3 (monsterSpeed.x, monsterSpeed.y);
+		}
+		{
 			var exp = .01f * Mathf.Pow (1.05f, 100 * monsterLayer.pos);
 			monsterLayer.obj.transform.localPosition = new Vector3 (
 				p * Mathf.Cos (phi) * exp + 1 / monsterLayer.pos * posTrack.x,
@@ -80,6 +73,23 @@ public class Main : MonoBehaviour
 			monsterLayer.obj.transform.localScale = new Vector3 (exp, exp);
 		}
 
+		if (Time.frameCount % 8 == 0) {
+			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
+			layers.Add (layer);
+			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
+				Random.value,
+				Random.value,
+				Random.value
+			);
+
+			if (Random.value < 1.2) {
+				Item item = new Item ();
+				item.obj = Instantiate (milonovPrefab) as GameObject;
+				item.obj.transform.SetParent (layer.obj.transform);
+				item.obj.transform.localPosition = H.RandomPointInCircle (5);
+				layer.items.Add (item);
+			}
+		}
 		foreach (var layer in layers) {
 			layer.pos += .01f;
 			var exp = .01f * Mathf.Pow (1.05f, 100 * layer.pos);
@@ -90,9 +100,8 @@ public class Main : MonoBehaviour
 			layer.obj.transform.localScale = new Vector3 (exp, exp);
 			foreach (var item in layer.items) {
 				if (layer.pos >= .9 && layer.pos < 1) {
-					if (H.Hypot (
-						    monster.obj.transform.localPosition.x - item.obj.transform.localPosition.x,
-						    monster.obj.transform.localPosition.y - item.obj.transform.localPosition.y) < monster.radius + item.radius) {
+					if (H.Hypot (monster.obj.transform.localPosition, item.obj.transform.localPosition)
+					    < monster.radius + item.radius) {
 						item.obj.GetComponent<Milonov> ().color = new Color (1, 0, 0, 1);
 					}
 				}
@@ -140,6 +149,11 @@ class H
 		return Mathf.Sqrt (x * x + y * y);
 	}
 
+	public static float Hypot (Vector3 f, Vector3 s)
+	{
+		return Mathf.Sqrt ((f.x - s.x) * (f.x - s.x) + (f.y - s.y) * (f.y - s.y));
+	}
+
 	public static Vector3 RandomPointInCircle (float r)
 	{
 		Vector3 point;
@@ -150,6 +164,35 @@ class H
 			);
 		} while(H.Hypot (point.x, point.y) > r);
 		return point;
+	}
+
+}
+
+class Dir
+{
+	public float x = 0;
+	public float y = 0;
+
+	public float p {
+		get {
+			return H.Hypot (x, y);
+		}
+		set {
+			float _phi = phi;
+			x = value * Mathf.Cos (phi);
+			y = value * Mathf.Sin (phi);
+		}
+	}
+
+	public float phi {
+		get {
+			return Mathf.Atan2 (y, x);
+		}
+		set {
+			float _p = p;
+			x = _p * Mathf.Cos (value);
+			y = _p * Mathf.Sin (value);
+		}
 	}
 
 }
