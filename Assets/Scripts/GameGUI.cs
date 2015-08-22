@@ -9,6 +9,8 @@ public class GameGUI : MonoBehaviour {
 	public Texture2D battery;
 	public Texture2D yellow;
 
+	public Texture2D restartButton;
+
 	public Font robotoRegular;
 	private GUIStyle myStyle;
 
@@ -20,15 +22,36 @@ public class GameGUI : MonoBehaviour {
 	}
 
 	void OnGUI() {
+		float rbx = 30;
+		float rby = 30;
+		float rbw = restartButton.width;
+		float rbh = restartButton.height;
+		Rect rbrect = new Rect (rbx, rby, rbw, rbh);
+
+		Color color = GUI.color;
+
+		if (rbrect.Contains (Event.current.mousePosition)) {
+			color.a = 0.5f;
+			if (Event.current.type == EventType.MouseUp) {
+				GameManager.restart();
+			}
+		}
+		GUI.color = color;
+		GUI.DrawTexture (rbrect, restartButton);
+		GUI.color = Color.white;
+
+
 		float batteryRightMargin = 20;
-		float batteryWidth = battery.width;
-		float batteryHeight = battery.height;
-		float batteryX = Screen.width - battery.width - batteryRightMargin;
+		float batteryWidth = battery.width / 2.0f;
+		float batteryHeight = battery.height / 2.0f;
+		float batteryX = Screen.width - batteryWidth - batteryRightMargin;
 		float batteryY = 10;
 		Rect batteryRect = new Rect (batteryX, batteryY, batteryWidth, batteryHeight);
 
-		float yellowWidth = Player.charge * yellow.width;
-		float yellowHeight = yellow.height;
+		float yw = yellow.width / 2.0f;
+		float yh = yellow.height / 2.0f;
+		float yellowWidth = Player.charge * yw;
+		float yellowHeight = yh;
 		float yellowX = batteryX + 5.0f;
 		float yellowY = batteryY + 5.0f;
 		Rect yellowRect = new Rect (yellowX, yellowY, yellowWidth, yellowHeight);
@@ -37,8 +60,8 @@ public class GameGUI : MonoBehaviour {
 		GUI.DrawTexture (batteryRect, battery);
 
 		int numHearts = Player.MAX_LIVES;
-		float heartWidth = redHeart.width;
-		float heartHeight = redHeart.height;
+		float heartWidth = redHeart.width / 2.0f;
+		float heartHeight = redHeart.height / 2.0f;
 		float heartsRightMargin = 50 + batteryRightMargin + batteryWidth;
 		float spaceBetweenHearts = 10.0f;
 		float heartsY = 40.0f;
