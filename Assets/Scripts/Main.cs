@@ -10,7 +10,8 @@ public class Main : MonoBehaviour
 
 	const float TRACK_SPEED = .01f;
 
-	GameObject monster;
+	Layer monsterLayer;
+	Item monster;
 	List<Layer> layers = new List<Layer> ();
 
 	Vector3 track1 = new Vector3 (0, 0);
@@ -21,9 +22,14 @@ public class Main : MonoBehaviour
 	{
 		circlePrefab = Resources.Load ("Prefabs/Oval4");
 		milonovPrefab = Resources.Load ("Prefabs/Milonov2");
-		monsterPrefab = Resources.Load ("Prefabs/Milonov");
+		monsterPrefab = Resources.Load ("Prefabs/Milonov2");
 
-		monster = Instantiate (monsterPrefab) as GameObject;
+		monsterLayer = new Layer (new GameObject ());
+		monsterLayer.pos = .95f;
+		monster = new Item ();
+		monster.obj = Instantiate (monsterPrefab) as GameObject;
+		monsterLayer.items.Add (monster);
+		monster.obj.transform.parent = monsterLayer.obj.transform;
 	}
 
 	void Update ()
@@ -31,7 +37,6 @@ public class Main : MonoBehaviour
 		if (Time.frameCount % 8 == 0) {
 			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
 			layers.Add (layer);
-//			bg.obj.transform.localScale = new Vector3 (.01f, .01f);
 			layer.obj.transform.localEulerAngles = new Vector3 (0, 0, Random.Range (0, 360));
 			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
 				Random.value,
@@ -66,6 +71,15 @@ public class Main : MonoBehaviour
 		float phi = 
 			Mathf.Atan2 (Input.mousePosition.y / Screen.height - .5f, Input.mousePosition.x / Screen.width - .5f);
 
+		{
+			var exp = .01f * Mathf.Pow (1.05f, 100 * monsterLayer.pos);
+			monsterLayer.obj.transform.localPosition = new Vector3 (
+				p * Mathf.Cos (phi) * exp + 1 / monsterLayer.pos * posTrack.x,
+				p * Mathf.Sin (phi) * exp + 1 / monsterLayer.pos * posTrack.y
+			);
+			monsterLayer.obj.transform.localScale = new Vector3 (exp, exp);
+		}
+
 		foreach (var layer in layers) {
 			layer.pos += .01f;
 			var exp = .01f * Mathf.Pow (1.05f, 100 * layer.pos);
@@ -75,11 +89,18 @@ public class Main : MonoBehaviour
 			);
 			layer.obj.transform.localScale = new Vector3 (exp, exp);
 			foreach (var item in layer.items) {
+				if (layer.pos >= .9 && layer.pos < 1) {
+					if (H.Hypot (
+						    monster.obj.transform.localPosition.x - item.obj.transform.localPosition.x,
+						    monster.obj.transform.localPosition.y - item.obj.transform.localPosition.y) < monster.radius + item.radius) {
+						item.obj.GetComponent<Milonov> ().color = new Color (1, 0, 0, 1);
+					}
+				}
 				item.obj.GetComponent<Milonov> ().color = new Color (
 					item.obj.GetComponent<Milonov> ().color.r,
 					item.obj.GetComponent<Milonov> ().color.g,
 					item.obj.GetComponent<Milonov> ().color.b,
-					Mathf.Min (1, Mathf.Max (0, 8.5f - layer.pos * 8))
+					Mathf.Min (1, Mathf.Max (0, 9f - layer.pos * 8))
 				);
 			}
 		}
