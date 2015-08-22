@@ -17,7 +17,7 @@ public class Main : MonoBehaviour
 
 	void Start ()
 	{
-		prefab = Resources.Load ("Prefabs/proto_bg0");
+		prefab = Resources.Load ("Prefabs/Oval4");
 	}
 
 	void Update ()
