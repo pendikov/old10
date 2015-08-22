@@ -19,6 +19,8 @@ public class Main : MonoBehaviour
 	Vector3 track2 = new Vector3 (0, 0);
 	float trackTime = 0;
 
+	float tunnelSpeed = .001f;
+
 	void Start ()
 	{
 		circlePrefab = Resources.Load ("Prefabs/Oval4");
@@ -35,7 +37,11 @@ public class Main : MonoBehaviour
 
 	void Update ()
 	{
-		trackTime += TRACK_SPEED;
+		tunnelSpeed += .000005f;
+//		if (tunnelSpeed >= .015)
+//			GameObject.Find ("Main Camera").GetComponent<Camera> ().clearFlags = CameraClearFlags.Depth;
+
+		trackTime += 10 * Mathf.Sqrt (tunnelSpeed) * TRACK_SPEED;
 		while (trackTime >= 1) {
 			trackTime -= 1;
 			track1 = track2;
@@ -46,11 +52,11 @@ public class Main : MonoBehaviour
 			track1 * Mathf.Cos (trackTime * Mathf.PI / 2) +
 			track2 * (1 - Mathf.Cos (trackTime * Mathf.PI / 2));
 
-		float p = 10 * Mathf.Min (.5f, Mathf.Sqrt (
-			          Mathf.Pow (Input.mousePosition.x / Screen.width - .5f, 2) +
-			          Mathf.Pow (Input.mousePosition.y / Screen.height - .5f, 2)));
-		float phi = 
-			Mathf.Atan2 (Input.mousePosition.y / Screen.height - .5f, Input.mousePosition.x / Screen.width - .5f);
+//		float p = 10 * Mathf.Min (.5f, Mathf.Sqrt (
+//			          Mathf.Pow (Input.mousePosition.x / Screen.width - .5f, 2) +
+//			          Mathf.Pow (Input.mousePosition.y / Screen.height - .5f, 2)));
+//		float phi = 
+//			Mathf.Atan2 (Input.mousePosition.y / Screen.height - .5f, Input.mousePosition.x / Screen.width - .5f);
 
 		{
 			float dx = (Input.GetKey (KeyCode.D) ? 1 : 0) - (Input.GetKey (KeyCode.A) ? 1 : 0);
@@ -66,6 +72,8 @@ public class Main : MonoBehaviour
 			if (l > 5)
 				monster.obj.transform.localPosition *= 5f / l;
 		}
+		float p = -H.Hypot (monster.obj.transform.localPosition.x, monster.obj.transform.localPosition.y) / 2;
+		float phi = Mathf.Atan2 (monster.obj.transform.localPosition.y, monster.obj.transform.localPosition.x);
 		{
 			var exp = .01f * Mathf.Pow (1.05f, 100 * monsterLayer.pos);
 			monsterLayer.obj.transform.localPosition = new Vector3 (
@@ -94,7 +102,7 @@ public class Main : MonoBehaviour
 			}
 		}
 		foreach (var layer in layers) {
-			layer.pos += .01f;
+			layer.pos += tunnelSpeed;
 			var exp = .01f * Mathf.Pow (1.05f, 100 * layer.pos);
 			layer.obj.transform.localPosition = new Vector3 (
 				p * Mathf.Cos (phi) * exp + 1 / layer.pos * posTrack.x,
@@ -108,12 +116,21 @@ public class Main : MonoBehaviour
 						item.obj.GetComponent<Milonov> ().color = new Color (1, 0, 0, 1);
 					}
 				}
-				item.obj.GetComponent<Milonov> ().color = new Color (
-					item.obj.GetComponent<Milonov> ().color.r,
-					item.obj.GetComponent<Milonov> ().color.g,
-					item.obj.GetComponent<Milonov> ().color.b,
-					Mathf.Min (1, Mathf.Max (0, 9f - layer.pos * 8))
-				);
+				if (layer.pos > 1)
+					item.obj.GetComponent<Milonov> ().color = new Color (
+						item.obj.GetComponent<Milonov> ().color.r,
+						item.obj.GetComponent<Milonov> ().color.g,
+						item.obj.GetComponent<Milonov> ().color.b,
+						Mathf.Min (1, Mathf.Max (0, 6.5f - 6 * layer.pos))
+					);
+//				else
+//					item.obj.GetComponent<Milonov> ().color = new Color (
+//						item.obj.GetComponent<Milonov> ().color.r,
+//						item.obj.GetComponent<Milonov> ().color.g,
+//						item.obj.GetComponent<Milonov> ().color.b,
+//						Mathf.Min (1, Mathf.Max (0, 6.5f - 6 * layer.pos))
+//					);
+				// тут продолжаем
 			}
 		}
 
