@@ -78,8 +78,10 @@ public class Main : MonoBehaviour
 //			Mathf.Atan2 (Input.mousePosition.y / Screen.height - .5f, Input.mousePosition.x / Screen.width - .5f);
 
 		{
-			float dx = (Input.GetKey (KeyCode.D) ? 1 : 0) - (Input.GetKey (KeyCode.A) ? 1 : 0);
-			float dy = (Input.GetKey (KeyCode.W) ? 1 : 0) - (Input.GetKey (KeyCode.S) ? 1 : 0);
+			float dx = (Input.GetKey (KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? 1 : 0) - 
+				(Input.GetKey (KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) ? 1 : 0);
+			float dy = (Input.GetKey (KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ? 1 : 0) 
+				- (Input.GetKey (KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ? 1 : 0);
 			monsterSpeed.p = Mathf.Max (0, monsterSpeed.p - .05f);
 			if (dx != 0 || dy != 0) {
 				monsterSpeed.x += .1f * dx;
