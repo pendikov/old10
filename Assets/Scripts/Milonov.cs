@@ -7,7 +7,7 @@ public class Milonov : Sprite
 	public GameObject defaultFace;
 	public GameObject star;
 
-	private float starRotationSpeed = 2.0f;
+	public float starRotationSpeed = 200.0f;
 
 	public override Color color {
 		get {
@@ -48,7 +48,7 @@ public class Milonov : Sprite
 
 	void Update ()
 	{
-		star.transform.Rotate (new Vector3 (0, 0, starRotationSpeed));
+		star.transform.Rotate (new Vector3 (0, 0, starRotationSpeed*Time.deltaTime));
 	}
 
 }

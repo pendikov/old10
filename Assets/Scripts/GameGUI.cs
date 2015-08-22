@@ -22,6 +22,7 @@ public class GameGUI : MonoBehaviour {
 		myStyle.font = robotoRegular;
 		myStyle.normal.textColor = Color.white;
 		myStyle.fontSize = 60;
+		myStyle.alignment = TextAnchor.MiddleCenter;
 	}
 
 	void OnGUI() {
@@ -80,7 +81,7 @@ public class GameGUI : MonoBehaviour {
 
 			GameObject.Find("Main Camera").GetComponent<Main>().enabled = false;
 
-			float w = 300.0f;
+			float w = (float)Screen.width;
 			float h = 60.0f;
 			float x = (Screen.width - w) / 2.0f;
 			float y = (Screen.height - h) / 2.0f;

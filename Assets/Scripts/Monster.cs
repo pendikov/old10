@@ -17,6 +17,7 @@ public class Monster : MonoBehaviour {
 			ballsPool[i] = Instantiate(ballPrefab) as GameObject;
 			ballsPool[i].transform.localScale = Vector3.zero;
 		}
+		appear ();
 	}
 
 	void Update () {
@@ -25,6 +26,9 @@ public class Monster : MonoBehaviour {
 		}
 		if (Player.charge > 0.01f) {
 			loadWeapon();
+		}
+		if (Player.isDead) {
+			disappear();
 		}
 	}
 
@@ -43,7 +47,7 @@ public class Monster : MonoBehaviour {
 		ball = null;
 
 		Vector3 secondPosition = cam.ScreenToWorldPoint (Input.mousePosition);
-		while (currentTime < time)
+		while (currentTime <= time)
 		{
 			currentTime += Time.deltaTime;
 			ballTransform.position = Vector3.Lerp(firstPosition, secondPosition, currentTime * 1.0f / time);
@@ -60,7 +64,6 @@ public class Monster : MonoBehaviour {
 	public void loadWeapon() {
 		if (ball)
 			return;
-		print (Player.charge);
 		Player.charge -= 0.01f;
 
 		ball = ballsPool[currentBall];
@@ -69,5 +72,55 @@ public class Monster : MonoBehaviour {
 		ball.transform.parent = transform;
 		ball.transform.localPosition = new Vector3 (0.84f, 0.57f, 0);
 		ball.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+	}
+
+	public void appear() {
+		StartCoroutine ("doAppear");
+	}
+
+	public void disappear() {
+		StartCoroutine ("doDisappear");
+	}
+
+	private IEnumerator doAppear() {
+
+		const float time = 0.5f;
+		float currentTime = 0.0f;
+
+		Vector3 firstPosition = new Vector3 (0.0f, cam.ScreenToWorldPoint(new Vector3(0, -1)).y);		
+		Vector3 secondPosition = new Vector3 (0, 0);
+
+		Transform thisTransform = transform;
+		thisTransform.position = firstPosition;
+
+		while (currentTime <= time)
+		{
+			currentTime += Time.deltaTime;
+			thisTransform.position = Vector3.Lerp(firstPosition, secondPosition, currentTime / time);
+			yield return null;
+		}
+
+		yield return null;
+	}
+
+	private IEnumerator doDisappear() {
+
+		const float time = 0.5f;
+		float currentTime = 0.0f;
+
+		Vector3 firstPosition = transform.position;
+		Vector3 secondPosition = new Vector3 (firstPosition.x, cam.ScreenToWorldPoint(new Vector3(0, -5)).y);		
+		
+		Transform thisTransform = transform;
+		thisTransform.position = firstPosition;
+		
+		while (currentTime <= time)
+		{
+			currentTime += Time.deltaTime;
+			thisTransform.position = Vector3.Lerp(firstPosition, secondPosition, currentTime / time);
+			yield return null;
+		}
+		gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
+		yield return null;
 	}
 }

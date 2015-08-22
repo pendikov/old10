@@ -19,10 +19,12 @@ public class Main : MonoBehaviour
 	Vector3 track2 = new Vector3 (0, 0);
 	float trackTime = 0;
 
-	float tunnelSpeed = .001f;
+	float tunnelSpeed = .0048f;//.001f;
+
+	Milonov milonov;
 
 	string[] itemPrefabNames = new string[]{
-		"Prefabs/Milonov2",
+//		"Prefabs/Milonov2",
 		"Prefabs/Items/cross",
 		"Prefabs/Items/fish",
 		"Prefabs/Items/item1",
@@ -55,11 +57,14 @@ public class Main : MonoBehaviour
 		for (int i=1; i<itemPrefabNames.Length; ++i) {
 			itemPrefabs[i].AddComponent<BonusItem>();
 		}
+
+//		milonov = (Instantiate(milonovPrefab) as GameObject).GetComponent<Milonov>();
 	}
 
 	void Update ()
 	{
-		tunnelSpeed += .000005f;
+//		tunnelSpeed += .000005f;
+//		print (tunnelSpeed);
 //		if (tunnelSpeed >= .015)
 //			GameObject.Find ("Main Camera").GetComponent<Camera> ().clearFlags = CameraClearFlags.Depth;
 
@@ -132,6 +137,10 @@ public class Main : MonoBehaviour
 				item.obj.transform.localPosition = H.RandomPointInCircle (5);
 				item.obj.GetComponent<Sprite> ().sortingOrder = -Time.frameCount;
 				layer.items.Add (item);
+			}
+			if (Random.value < .13f) {
+
+
 			}
 		}
 		foreach (var layer in layers) {
