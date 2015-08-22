@@ -3,30 +3,62 @@ using System.Collections;
 
 public class GameGUI : MonoBehaviour {
 
-	public Texture2D textureLife;
-	public Texture2D textureBattery;
+	public Texture2D pinkHeart;
+	public Texture2D redHeart;
+
+	public Texture2D battery;
+	public Texture2D yellow;
 
 	public Font robotoRegular;
 	private GUIStyle myStyle;
-	// Use this for initialization
+
 	void Start () {
 		myStyle = new GUIStyle ();
 		myStyle.font = robotoRegular;
 		myStyle.normal.textColor = Color.white;
 		myStyle.fontSize = 30;
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
 	}
 
-	void OnGUI() {myStyle.font = robotoRegular;
+	void OnGUI() {
+		float batteryRightMargin = 20;
+		float batteryWidth = battery.width;
+		float batteryHeight = battery.height;
+		float batteryX = Screen.width - battery.width - batteryRightMargin;
+		float batteryY = 10;
+		Rect batteryRect = new Rect (batteryX, batteryY, batteryWidth, batteryHeight);
 
-		Rect rect1 = new Rect(Screen.width - 100 - 50, 20, 100, 100);
-		GUI.DrawTexture(rect1, textureBattery);
+		float yellowWidth = Player.charge * yellow.width;
+		float yellowHeight = yellow.height;
+		float yellowX = batteryX + 5.0f;
+		float yellowY = batteryY + 5.0f;
+		Rect yellowRect = new Rect (yellowX, yellowY, yellowWidth, yellowHeight);
 
-		GUI.Label(new Rect(Screen.width - 100 - 50,0,100,30),"300", myStyle);
+		GUI.DrawTexture (yellowRect, yellow);
+		GUI.DrawTexture (batteryRect, battery);
+
+		int numHearts = Player.MAX_LIVES;
+		float heartWidth = redHeart.width;
+		float heartHeight = redHeart.height;
+		float heartsRightMargin = 50 + batteryRightMargin + batteryWidth;
+		float spaceBetweenHearts = 10.0f;
+		float heartsY = 40.0f;
+
+		int livesLeft = Player.lives;
+		int livesLost = numHearts - livesLeft;
+
+		for (int i=0; i<livesLost; ++i) {
+			float x = Screen.width - heartsRightMargin - (heartWidth + spaceBetweenHearts) * (numHearts - i);
+			Rect rect = new Rect(x, heartsY, heartWidth, heartHeight);
+			GUI.DrawTexture(rect, pinkHeart);
+		}
+
+		for (int i=livesLost; i<numHearts; i++) {
+			float x = Screen.width - heartsRightMargin - (heartWidth + spaceBetweenHearts) * (numHearts - i);
+			Rect rect = new Rect(x, heartsY, heartWidth, heartHeight);
+			GUI.DrawTexture(rect, redHeart);
+		}
+
+
+
 	}
 }
