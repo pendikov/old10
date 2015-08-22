@@ -21,6 +21,20 @@ public class Main : MonoBehaviour
 
 	float tunnelSpeed = .001f;
 
+	string[] itemPrefabNames = new string[]{
+		"Prefabs/Milonov2",
+		"Prefabs/Items/cross",
+		"Prefabs/Items/fish",
+		"Prefabs/Items/item1",
+		"Prefabs/Items/item2",
+		"Prefabs/Items/item3",
+		"Prefabs/Items/item4",
+		"Prefabs/Items/item5",
+		"Prefabs/Items/item6",
+		"Prefabs/Items/item7",
+	};
+	GameObject[] itemPrefabs;
+
 	void Start ()
 	{
 		circlePrefab = Resources.Load ("Prefabs/Oval4");
@@ -33,6 +47,11 @@ public class Main : MonoBehaviour
 		monster.obj = Instantiate (monsterPrefab) as GameObject;
 		monsterLayer.items.Add (monster);
 		monster.obj.transform.parent = monsterLayer.obj.transform;
+
+		itemPrefabs = new GameObject[itemPrefabNames.Length];
+		for(int i=0; i<itemPrefabNames.Length;++i){
+			itemPrefabs[i] = Resources.Load(itemPrefabNames[i]) as GameObject;
+		}
 	}
 
 	void Update ()
@@ -94,10 +113,13 @@ public class Main : MonoBehaviour
 
 			if (Random.value < .3f) {
 				Item item = new Item ();
-				item.obj = Instantiate (milonovPrefab) as GameObject;
+
+				int rand = Random.Range(0, itemPrefabs.Length);
+//				item.obj = Instantiate (milonovPrefab) as GameObject;
+				item.obj = Instantiate(itemPrefabs[rand]);
 				item.obj.transform.SetParent (layer.obj.transform);
 				item.obj.transform.localPosition = H.RandomPointInCircle (5);
-				item.obj.GetComponent<Milonov> ().sortingOrder = -Time.frameCount;
+				item.obj.GetComponent<Sprite> ().sortingOrder = -Time.frameCount;
 				layer.items.Add (item);
 			}
 		}
@@ -113,21 +135,21 @@ public class Main : MonoBehaviour
 				if (layer.pos >= .9 && layer.pos < 1) {
 					if (H.Hypot (monster.obj.transform.localPosition, item.obj.transform.localPosition)
 					    < monster.radius + item.radius) {
-						item.obj.GetComponent<Milonov> ().color = new Color (1, 0, 0, 1);
+						item.obj.GetComponent<Sprite> ().color = new Color (1, 0, 0, 1);
 					}
 				}
 				if (layer.pos > 1)
-					item.obj.GetComponent<Milonov> ().color = new Color (
-						item.obj.GetComponent<Milonov> ().color.r,
-						item.obj.GetComponent<Milonov> ().color.g,
-						item.obj.GetComponent<Milonov> ().color.b,
+					item.obj.GetComponent<Sprite> ().color = new Color (
+						item.obj.GetComponent<Sprite> ().color.r,
+						item.obj.GetComponent<Sprite> ().color.g,
+						item.obj.GetComponent<Sprite> ().color.b,
 						Mathf.Min (1, Mathf.Max (0, 6.5f - 6 * layer.pos))
 					);
 //				else
-//					item.obj.GetComponent<Milonov> ().color = new Color (
-//						item.obj.GetComponent<Milonov> ().color.r,
-//						item.obj.GetComponent<Milonov> ().color.g,
-//						item.obj.GetComponent<Milonov> ().color.b,
+				//					item.obj.GetComponent<Sprite> ().color = new Color (
+				//						item.obj.GetComponent<Sprite> ().color.r,
+				//						item.obj.GetComponent<Sprite> ().color.g,
+				//						item.obj.GetComponent<Sprite> ().color.b,
 //						Mathf.Min (1, Mathf.Max (0, 6.5f - 6 * layer.pos))
 //					);
 				// тут продолжаем

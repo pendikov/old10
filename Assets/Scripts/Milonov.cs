@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Milonov : MonoBehaviour
+public class Milonov : Sprite
 {
 
 	public GameObject defaultFace;
@@ -9,7 +9,7 @@ public class Milonov : MonoBehaviour
 
 	private float starRotationSpeed = 2.0f;
 
-	public Color color {
+	public override Color color {
 		get {
 			return star.GetComponent<SpriteRenderer> ().color;
 		}
@@ -19,7 +19,7 @@ public class Milonov : MonoBehaviour
 		}
 	}
 
-	public int sortingOrder {
+	public override int sortingOrder {
 		get {
 			return star.GetComponent<SpriteRenderer> ().sortingOrder;
 		}
@@ -29,21 +29,13 @@ public class Milonov : MonoBehaviour
 		}
 	}
 
-	// Use this for initialization
 	void Start ()
 	{
 	
 	}
-	
-	// Update is called once per frame
+
 	void Update ()
 	{
-//		if (Input.GetKey (KeyCode.R)) {
-//			defaultFace.SetActive (false);
-//		} else {
-//			defaultFace.SetActive(true);
-//		}
-
 		star.transform.Rotate (new Vector3 (0, 0, starRotationSpeed));
 	}
 
