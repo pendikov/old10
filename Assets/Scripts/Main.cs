@@ -20,7 +20,7 @@ public class Main : MonoBehaviour
 	void Start ()
 	{
 		circlePrefab = Resources.Load ("Prefabs/Oval4");
-		milonovPrefab = Resources.Load ("Prefabs/Milonov");
+		milonovPrefab = Resources.Load ("Prefabs/Milonov2");
 		monsterPrefab = Resources.Load ("Prefabs/Milonov");
 
 //		monster = Instantiate (monsterPrefab) as GameObject;
@@ -74,14 +74,14 @@ public class Main : MonoBehaviour
 				p * Mathf.Sin (phi) * exp + 1 / layer.pos * posTrack.y
 			);
 			layer.obj.transform.localScale = new Vector3 (exp, exp);
-			foreach (var item in layer.items) {
-				item.obj.GetComponent<SpriteRenderer> ().color = new Color (
-					layer.obj.GetComponent<SpriteRenderer> ().color.r,
-					layer.obj.GetComponent<SpriteRenderer> ().color.g,
-					layer.obj.GetComponent<SpriteRenderer> ().color.b,
-					Mathf.Min (1, Mathf.Max (0, 8.5f - layer.pos * 8))
-				);
-			}
+//			foreach (var item in layer.items) {
+//				item.obj.GetComponent<SpriteRenderer> ().color = new Color (
+//					layer.obj.GetComponent<SpriteRenderer> ().color.r,
+//					layer.obj.GetComponent<SpriteRenderer> ().color.g,
+//					layer.obj.GetComponent<SpriteRenderer> ().color.b,
+//					Mathf.Min (1, Mathf.Max (0, 8.5f - layer.pos * 8))
+//				);
+//			}
 		}
 
 		for (var i = layers.Count - 1; i >= 0; i--)
