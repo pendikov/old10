@@ -29,6 +29,18 @@ public class Milonov : Sprite
 		}
 	}
 
+	public override float chargeBouns {
+		get {
+			return 0.0f;
+		}
+	}
+	
+	public override float lifeBouns {
+		get {
+			return -0.01f;
+		}
+	}
+
 	void Start ()
 	{
 	

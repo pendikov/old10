@@ -52,6 +52,9 @@ public class Main : MonoBehaviour
 		for(int i=0; i<itemPrefabNames.Length;++i){
 			itemPrefabs[i] = Resources.Load(itemPrefabNames[i]) as GameObject;
 		}
+		for (int i=1; i<itemPrefabNames.Length; ++i) {
+			itemPrefabs[i].AddComponent<BonusItem>();
+		}
 	}
 
 	void Update ()
@@ -107,11 +110,17 @@ public class Main : MonoBehaviour
 		if (Time.frameCount % 8 == 0) {
 			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
 			layers.Add (layer);
-			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
-				Random.value,
-				Random.value,
-				Random.value
-			);
+//			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
+//				Random.value,
+//				Random.value,
+//				Random.value
+//			);
+			layer.obj.GetComponent<SpriteRenderer>().color = new Color(//fd3a3a
+			                                                           253.0f/255.0f,
+			                                                           58.0f/255.0f,
+			                                                           28.0f/255.0f
+			                                                        
+				);
 
 			if (Random.value < .3f) {
 				Item item = new Item ();
@@ -138,6 +147,8 @@ public class Main : MonoBehaviour
 					if (H.Hypot (monster.obj.transform.localPosition, item.obj.transform.localPosition)
 					    < monster.radius + item.radius) {
 						item.obj.GetComponent<Sprite> ().color = new Color (1, 0, 0, 1);
+						Player.charge += item.obj.GetComponent<Sprite> ().chargeBouns;
+						Player.life += item.obj.GetComponent<Sprite> ().lifeBouns;
 					}
 				}
 				if (layer.pos > 1)
@@ -147,6 +158,7 @@ public class Main : MonoBehaviour
 						item.obj.GetComponent<Sprite> ().color.b,
 						Mathf.Min (1, Mathf.Max (0, 6.5f - 6 * layer.pos))
 					);
+
 //				else
 				//					item.obj.GetComponent<Sprite> ().color = new Color (
 				//						item.obj.GetComponent<Sprite> ().color.r,
