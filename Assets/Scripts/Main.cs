@@ -23,7 +23,7 @@ public class Main : MonoBehaviour
 		milonovPrefab = Resources.Load ("Prefabs/Milonov2");
 		monsterPrefab = Resources.Load ("Prefabs/Milonov");
 
-//		monster = Instantiate (monsterPrefab) as GameObject;
+		monster = Instantiate (monsterPrefab) as GameObject;
 	}
 
 	void Update ()
@@ -75,10 +75,10 @@ public class Main : MonoBehaviour
 			);
 			layer.obj.transform.localScale = new Vector3 (exp, exp);
 			foreach (var item in layer.items) {
-				item.obj.GetComponent<SpriteRenderer> ().color = new Color (
-					item.obj.GetComponent<SpriteRenderer> ().color.r,
-					item.obj.GetComponent<SpriteRenderer> ().color.g,
-					item.obj.GetComponent<SpriteRenderer> ().color.b,
+				item.obj.GetComponent<Milonov> ().color = new Color (
+					item.obj.GetComponent<Milonov> ().color.r,
+					item.obj.GetComponent<Milonov> ().color.g,
+					item.obj.GetComponent<Milonov> ().color.b,
 					Mathf.Min (1, Mathf.Max (0, 8.5f - layer.pos * 8))
 				);
 			}
