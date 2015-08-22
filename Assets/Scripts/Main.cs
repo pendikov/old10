@@ -23,7 +23,7 @@ public class Main : MonoBehaviour
 	{
 		circlePrefab = Resources.Load ("Prefabs/Oval4");
 		milonovPrefab = Resources.Load ("Prefabs/Milonov2");
-		monsterPrefab = Resources.Load ("Prefabs/Milonov2");
+		monsterPrefab = Resources.Load ("Prefabs/monstr@2x");
 
 		monsterLayer = new Layer (new GameObject ());
 		monsterLayer.pos = .95f;
@@ -55,14 +55,16 @@ public class Main : MonoBehaviour
 		{
 			float dx = (Input.GetKey (KeyCode.D) ? 1 : 0) - (Input.GetKey (KeyCode.A) ? 1 : 0);
 			float dy = (Input.GetKey (KeyCode.W) ? 1 : 0) - (Input.GetKey (KeyCode.S) ? 1 : 0);
+			monsterSpeed.p = Mathf.Max (0, monsterSpeed.p - .05f);
 			if (dx != 0 || dy != 0) {
-				monsterSpeed.x += .02f * dx;
-				monsterSpeed.y += .02f * dy;
-				monsterSpeed.p = Mathf.Min (1, monsterSpeed.p);
-			} else {
-				monsterSpeed.p = Mathf.Max (0, monsterSpeed.p - .1f);
+				monsterSpeed.x += .1f * dx;
+				monsterSpeed.y += .1f * dy;
+				monsterSpeed.p = Mathf.Min (.3f, monsterSpeed.p);
 			}
 			monster.obj.transform.localPosition += new Vector3 (monsterSpeed.x, monsterSpeed.y);
+			float l = H.Hypot (monster.obj.transform.localPosition);
+			if (l > 5)
+				monster.obj.transform.localPosition *= 5f / l;
 		}
 		{
 			var exp = .01f * Mathf.Pow (1.05f, 100 * monsterLayer.pos);
@@ -82,11 +84,12 @@ public class Main : MonoBehaviour
 				Random.value
 			);
 
-			if (Random.value < 1.2) {
+			if (Random.value < .3f) {
 				Item item = new Item ();
 				item.obj = Instantiate (milonovPrefab) as GameObject;
 				item.obj.transform.SetParent (layer.obj.transform);
 				item.obj.transform.localPosition = H.RandomPointInCircle (5);
+				item.obj.GetComponent<Milonov> ().sortingOrder = -Time.frameCount;
 				layer.items.Add (item);
 			}
 		}
@@ -115,7 +118,7 @@ public class Main : MonoBehaviour
 		}
 
 		for (var i = layers.Count - 1; i >= 0; i--)
-			if (layers [i].pos > 10) {
+			if (layers [i].pos > 3) {
 				Destroy (layers [i].obj);
 				layers.RemoveAt (i);
 			}
@@ -152,6 +155,11 @@ class H
 	public static float Hypot (Vector3 f, Vector3 s)
 	{
 		return Mathf.Sqrt ((f.x - s.x) * (f.x - s.x) + (f.y - s.y) * (f.y - s.y));
+	}
+
+	public static float Hypot (Vector3 v)
+	{
+		return Mathf.Sqrt (v.x * v.x + v.y * v.y);
 	}
 
 	public static Vector3 RandomPointInCircle (float r)

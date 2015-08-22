@@ -19,6 +19,16 @@ public class Milonov : MonoBehaviour
 		}
 	}
 
+	public int sortingOrder {
+		get {
+			return star.GetComponent<SpriteRenderer> ().sortingOrder;
+		}
+		set {
+			star.GetComponent<SpriteRenderer> ().sortingOrder = value - 1;
+			defaultFace.GetComponent<SpriteRenderer> ().sortingOrder = value;
+		}
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
