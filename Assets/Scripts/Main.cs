@@ -4,6 +4,8 @@ using System.Collections.Generic;
 
 public class Main : MonoBehaviour
 {
+	int frame = 0;
+
 	UnityEngine.Object circlePrefab;
 	UnityEngine.Object milonovPrefab;
 	UnityEngine.Object monsterPrefab;
@@ -70,6 +72,8 @@ public class Main : MonoBehaviour
 
 	void Update ()
 	{
+		frame++;
+
 		tunnelSpeed += .000003f;
 //		if (tunnelSpeed >= .015)
 //			GameObject.Find ("Main Camera").GetComponent<Camera> ().clearFlags = CameraClearFlags.Depth;
@@ -118,20 +122,19 @@ public class Main : MonoBehaviour
 			monsterLayer.obj.transform.localScale = new Vector3 (exp, exp);
 		}
 
-		if (Time.frameCount % (8 - (int)(Time.frameCount / 600)) == 0) {
+		if (frame % (8 - (int)(frame / 600)) == 0) {
 			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
 			layers.Add (layer);
 
 			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
-				.5f * Mathf.Sin (2 * .003f * Time.frameCount) + .5f,
-				.5f * Mathf.Sin (2 * .005f * Time.frameCount) + .5f,
-				.5f * Mathf.Sin (2 * .007f * Time.frameCount) + .5f
+				.5f * Mathf.Sin (2 * .003f * frame) + .5f,
+				.5f * Mathf.Sin (2 * .005f * frame) + .5f,
+				.5f * Mathf.Sin (2 * .007f * frame) + .5f
 			);
 //			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (//fd3a3a
 //				253.0f / 255.0f,
 //				58.0f / 255.0f,
 //				28.0f / 255.0f
-//			                                                        
 //			);
 
 			if (Random.value < .3f + 30 * tunnelSpeed) {
@@ -142,7 +145,7 @@ public class Main : MonoBehaviour
 				item.obj = Instantiate (itemPrefabs [rand]);
 				item.obj.transform.SetParent (layer.obj.transform);
 				item.obj.transform.localPosition = H.RandomPointInCircle (5);
-				item.obj.GetComponent<Sprite> ().sortingOrder = -Time.frameCount;
+				item.obj.GetComponent<Sprite> ().sortingOrder = -frame;
 				layer.items.Add (item);
 			}
 			if (Random.value < .13f) {
@@ -174,15 +177,6 @@ public class Main : MonoBehaviour
 						item.obj.GetComponent<Sprite> ().color.b,
 						Mathf.Min (1, Mathf.Max (0, 6.5f - 6 * layer.pos))
 					);
-
-//				else
-				//					item.obj.GetComponent<Sprite> ().color = new Color (
-				//						item.obj.GetComponent<Sprite> ().color.r,
-				//						item.obj.GetComponent<Sprite> ().color.g,
-				//						item.obj.GetComponent<Sprite> ().color.b,
-//						Mathf.Min (1, Mathf.Max (0, 6.5f - 6 * layer.pos))
-//					);
-				// тут продолжаем
 			}
 		}
 
