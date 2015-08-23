@@ -20,12 +20,13 @@ public class Main : MonoBehaviour
 	Vector3 track2 = new Vector3 (0, 0);
 	float trackTime = 0;
 
-	float tunnelSpeed = .0048f;//.001f;
+	float tunnelSpeed = .0048f;
+	//.001f;
 
 	Milonov milonov;
 	Milonov fish;
 
-	string[] itemPrefabNames = new string[]{
+	string[] itemPrefabNames = new string[] {
 //		"Prefabs/Milonov2",
 		"Prefabs/Items/cross",
 //		"Prefabs/Items/fish",
@@ -54,11 +55,11 @@ public class Main : MonoBehaviour
 		monster.obj.transform.parent = monsterLayer.obj.transform;
 
 		itemPrefabs = new GameObject[itemPrefabNames.Length];
-		for(int i=0; i<itemPrefabNames.Length;++i){
-			itemPrefabs[i] = Resources.Load(itemPrefabNames[i]) as GameObject;
+		for (int i = 0; i < itemPrefabNames.Length; ++i) {
+			itemPrefabs [i] = Resources.Load (itemPrefabNames [i]) as GameObject;
 		}
 
-		milonov = (Instantiate(milonovPrefab) as GameObject).GetComponent<Milonov>();
+		milonov = (Instantiate (milonovPrefab) as GameObject).GetComponent<Milonov> ();
 		milonov.transform.parent = monsterLayer.obj.transform;
 		milonov.monster = monster.obj.GetComponent<Monster> ();
 
@@ -69,8 +70,7 @@ public class Main : MonoBehaviour
 
 	void Update ()
 	{
-//		tunnelSpeed += .000005f;
-//		print (tunnelSpeed);
+		tunnelSpeed += .000003f;
 //		if (tunnelSpeed >= .015)
 //			GameObject.Find ("Main Camera").GetComponent<Camera> ().clearFlags = CameraClearFlags.Depth;
 
@@ -92,10 +92,10 @@ public class Main : MonoBehaviour
 //			Mathf.Atan2 (Input.mousePosition.y / Screen.height - .5f, Input.mousePosition.x / Screen.width - .5f);
 
 		{
-			float dx = (Input.GetKey (KeyCode.D) || Input.GetKey(KeyCode.RightArrow) ? 1 : 0) - 
-				(Input.GetKey (KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) ? 1 : 0);
-			float dy = (Input.GetKey (KeyCode.W) || Input.GetKey(KeyCode.UpArrow) ? 1 : 0) 
-				- (Input.GetKey (KeyCode.S) || Input.GetKey(KeyCode.DownArrow) ? 1 : 0);
+			float dx = (Input.GetKey (KeyCode.D) || Input.GetKey (KeyCode.RightArrow) ? 1 : 0) -
+			           (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow) ? 1 : 0);
+			float dy = (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow) ? 1 : 0)
+			           - (Input.GetKey (KeyCode.S) || Input.GetKey (KeyCode.DownArrow) ? 1 : 0);
 			monsterSpeed.p = Mathf.Max (0, monsterSpeed.p - .05f);
 			if (dx != 0 || dy != 0) {
 				monsterSpeed.x += .1f * dx;
@@ -127,19 +127,21 @@ public class Main : MonoBehaviour
 //				Random.value,
 //				Random.value
 //			);
-			layer.obj.GetComponent<SpriteRenderer>().color = new Color(//fd3a3a
-			                                                           253.0f/255.0f,
-			                                                           58.0f/255.0f,
-			                                                           28.0f/255.0f
+			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (//fd3a3a
+				253.0f / 255.0f,
+				58.0f / 255.0f,
+				28.0f / 255.0f
 			                                                        
-				);
+			);
 
-			if (Random.value < .3f) {
+			print (tunnelSpeed);
+
+			if (Random.value < .3f + 30 * tunnelSpeed) {
 				Item item = new Item ();
 
-				int rand = Random.Range(0, itemPrefabs.Length);
+				int rand = Random.Range (0, itemPrefabs.Length);
 //				item.obj = Instantiate (milonovPrefab) as GameObject;
-				item.obj = Instantiate(itemPrefabs[rand]);
+				item.obj = Instantiate (itemPrefabs [rand]);
 				item.obj.transform.SetParent (layer.obj.transform);
 				item.obj.transform.localPosition = H.RandomPointInCircle (5);
 				item.obj.GetComponent<Sprite> ().sortingOrder = -Time.frameCount;
@@ -196,7 +198,7 @@ public class Main : MonoBehaviour
 
 }
 
-class Item 
+class Item
 {
 	public float radius = 1;
 	public GameObject obj;
