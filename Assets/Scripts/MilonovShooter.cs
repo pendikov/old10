@@ -35,6 +35,9 @@ public class MilonovShooter : Shooter {
 		
 		GameObject tempBall = ball;
 		ball = null;
+
+		tempBall.GetComponent<Ball> ().playerShoot = false;
+		tempBall.GetComponent<Ball> ().didShoot = true;
 		
 		while (currentTime <= time)
 		{
@@ -45,6 +48,9 @@ public class MilonovShooter : Shooter {
 			yield return null;
 		}
 		tempBall.GetComponent<SpriteRenderer> ().color = Color.clear;
+
+		tempBall.GetComponent<Ball> ().playerShoot = false;
+		tempBall.GetComponent<Ball> ().didShoot = false;
 		
 		yield return null;
 		

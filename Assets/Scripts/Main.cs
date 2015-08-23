@@ -69,12 +69,33 @@ public class Main : MonoBehaviour
 		fish.transform.parent = monsterLayer.obj.transform;
 		fish.monster = monster.obj.GetComponent<Monster> ();
 	}
+	bool isSlowed = false;
+	void slowDown() {
+		if(!isSlowed)
+		StartCoroutine ("doSlowDown");
+
+	}
+
+	IEnumerator doSlowDown() {
+		isSlowed = true;
+		yield return null;
+		float currentSpeed = tunnelSpeed;
+
+		tunnelSpeed = tunnelSpeed / 5.0f;
+
+		yield return new WaitForSeconds (5.0f);
+		tunnelSpeed = currentSpeed;
+		isSlowed = false;
+	}
 
 	void Update ()
 	{
+
 		frame++;
 
 		tunnelSpeed += .000003f;
+
+		print ("tunnelSpeed: "+tunnelSpeed);
 //		if (tunnelSpeed >= .015)
 //			GameObject.Find ("Main Camera").GetComponent<Camera> ().clearFlags = CameraClearFlags.Depth;
 
@@ -167,7 +188,13 @@ public class Main : MonoBehaviour
 					    < monster.radius + item.radius) {
 						item.obj.GetComponent<Sprite> ().color = new Color (1, 0, 0, 1);
 						Player.charge += item.obj.GetComponent<Sprite> ().chargeBouns;
+						print(item.obj.name);
+						if(item.obj.name == "item1(Clone)") {
+							slowDown();
+						}
+
 //						Player.life += item.obj.GetComponent<Sprite> ().lifeBouns;
+						Player.score += item.obj.GetComponent<Sprite> ().scoreBonus;
 					}
 				}
 				if (layer.pos > 1)

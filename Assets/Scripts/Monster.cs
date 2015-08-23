@@ -54,6 +54,10 @@ public class Monster : MonoBehaviour {
 		ball = null;
 		tempBall.name = "monster_ball";
 		Vector3 secondPosition = cam.ScreenToWorldPoint (Input.mousePosition);
+
+		tempBall.GetComponent<Ball> ().playerShoot = true;
+		tempBall.GetComponent<Ball> ().didShoot = true;
+
 		while (currentTime <= time)
 		{
 			currentTime += Time.deltaTime;
@@ -64,6 +68,9 @@ public class Monster : MonoBehaviour {
 		}
 		currentTime = 0.0f;
 
+		tempBall.GetComponent<Ball> ().playerShoot = true;
+		tempBall.GetComponent<Ball> ().didShoot = false;
+
 		yield return null;
 
 	}
@@ -71,6 +78,7 @@ public class Monster : MonoBehaviour {
 	public void loadWeapon() {
 		if (ball)
 			return;
+
 		Player.charge -= 0.01f;
 
 		ball = ballsPool[currentBall];
@@ -137,8 +145,7 @@ public class Monster : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		print (coll.collider.name);
-		if("Milonov_ball" == coll.collider.name) {
+		if(!coll.collider.GetComponent<Ball>().playerShoot && coll.collider.GetComponent<Ball>().didShoot) {
 			getShot();
 		}
 	}

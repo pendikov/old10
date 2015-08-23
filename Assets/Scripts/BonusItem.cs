@@ -5,7 +5,7 @@ public class BonusItem : Sprite {
 
 	public override float chargeBouns {
 		get {
-			return 0.01f;
+			return 0.001f;
 		}
 	}
 	
@@ -13,6 +13,16 @@ public class BonusItem : Sprite {
 		get {
 			return 0.001f;
 		}
+	}
+
+	public float timeDecrement {
+		get {
+			return 5;
+		}
+	}
+
+	public void pickup() {
+		Player.score += 1;
 	}
 
 	void Start () {

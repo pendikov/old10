@@ -9,6 +9,12 @@ public class Sprite : MonoBehaviour {
 		}
 	}
 
+	public virtual int scoreBonus {
+		get {
+			return 1;//0.0f;
+		}
+	}
+
 	public virtual float lifeBouns {
 		get {
 			return - Random.value * 0.01f;//0.0f;

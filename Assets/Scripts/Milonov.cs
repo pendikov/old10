@@ -193,7 +193,7 @@ public class Milonov : Sprite
 			float currentTime = 0.0f;
 
 			float rand = (Random.value + 0.14f);
-			float randomScale = rand > 0.65f ? 0.65f : rand;
+			float randomScale = rand > 1.0f ? 1.0f : rand;
 			Vector3 currentScale = transform.localScale;
 			Vector3 newScale = new Vector3(1.0f, 1.0f, 1.0f) * randomScale;
 
@@ -211,11 +211,11 @@ public class Milonov : Sprite
 	}
 
 	void OnMouseDown() {
-//		hurt ();
+		hurt ();
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if (coll.collider.name == "monster_ball") {
+		if(coll.collider.GetComponent<Ball>().playerShoot && coll.collider.GetComponent<Ball>().didShoot) {
 			hurt ();
 		}
 

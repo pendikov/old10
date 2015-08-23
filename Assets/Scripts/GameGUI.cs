@@ -94,25 +94,28 @@ public class GameGUI : MonoBehaviour {
 		GUI.DrawTextureWithTexCoords(rectFull,lifeFull,new Rect(0.0f, 0.0f, hew / hw, 1.0f));
 
 		if (Player.isDead) {
-
+			
 			GameObject.Find("Main Camera").GetComponent<Main>().enabled = false;
 
-			float w = (float)Screen.width;
-			float h = 60.0f;
-			float x = (Screen.width - w) / 2.0f;
-			float y = (Screen.height - h) / 2.0f;
-			Rect rect = new Rect(x, y, w, h);
+			Application.LoadLevel(2);
 
-			GUI.Label(rect, "GAME OVER\nMOTHERFUCKER", blackStyle);
-
-//			float w1 = (float)Screen.width;
-//			float h1 = 60.0f;
-//			float x1 = (Screen.width - w1) / 2.0f;
-//			float y1 = y + h + 20;
-//			Rect rect1 = new Rect(x1, y1, w1, h1);
-//			
-//			GUI.Label(rect1, "The faith is weak with this one", regularStyle);
-
+//			float w = (float)Screen.width;
+////			float h = 60.0f;
+//			float h = (float)Screen.height;
+//			float x = (Screen.width - w) / 2.0f;
+//			float y = (Screen.height - h) / 2.0f;
+//			Rect rect = new Rect(x, y, w, h);
+//
+//			GUI.Label(rect, "GAME OVER\nMOTHERFUCKER\nYOUR SCORE IS "+Player.score, blackStyle);
+//
+////			float w1 = (float)Screen.width;
+////			float h1 = 60.0f;
+////			float x1 = (Screen.width - w1) / 2.0f;
+////			float y1 = y + h + 20;
+////			Rect rect1 = new Rect(x1, y1, w1, h1);
+////			
+////			GUI.Label(rect1, "The faith is weak with this one", regularStyle);
+//
 			showRestart();
 		}
 		//draw score
@@ -122,10 +125,6 @@ public class GameGUI : MonoBehaviour {
 		float sy = 40.0f;
 		Rect srect = new Rect(sx, sy, scoreW, scoreH);
 		GUI.Label(srect, "SCORE: "+Player.score, scoreStyle);
-	}
-
-	void drawScore() {
-
 	}
 
 	private void showRestart() {
