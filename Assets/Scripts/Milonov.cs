@@ -210,7 +210,13 @@ public class Milonov : Sprite
 	}
 
 	void OnMouseDown() {
-		hurt ();
+//		hurt ();
 	}
 
+	void OnCollisionEnter2D(Collision2D coll) {
+		if (coll.collider.name == "ball(Clone)") {
+			hurt ();
+		}
+
+	}
 }
