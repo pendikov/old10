@@ -118,21 +118,21 @@ public class Main : MonoBehaviour
 			monsterLayer.obj.transform.localScale = new Vector3 (exp, exp);
 		}
 
-		if (Time.frameCount % 8 == 0) {
+		if (Time.frameCount % (8 - (int)(Time.frameCount / 600)) == 0) {
 			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
 			layers.Add (layer);
 
 			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
-				.5f * Mathf.Sin (.007f * Time.frameCount) + 1,
-				.5f * Mathf.Sin (.003f * Time.frameCount) + 1,
-				.5f * Mathf.Sin (.005f * Time.frameCount) + 1
+				.5f * Mathf.Sin (2 * .003f * Time.frameCount) + .5f,
+				.5f * Mathf.Sin (2 * .005f * Time.frameCount) + .5f,
+				.5f * Mathf.Sin (2 * .007f * Time.frameCount) + .5f
 			);
-			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (//fd3a3a
-				253.0f / 255.0f,
-				58.0f / 255.0f,
-				28.0f / 255.0f
-			                                                        
-			);
+//			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (//fd3a3a
+//				253.0f / 255.0f,
+//				58.0f / 255.0f,
+//				28.0f / 255.0f
+//			                                                        
+//			);
 
 			if (Random.value < .3f + 30 * tunnelSpeed) {
 				Item item = new Item ();
@@ -187,7 +187,7 @@ public class Main : MonoBehaviour
 		}
 
 		for (var i = layers.Count - 1; i >= 0; i--)
-			if (layers [i].pos > 3) {
+			if (layers [i].pos > 1.2) {
 				Destroy (layers [i].obj);
 				layers.RemoveAt (i);
 			}
