@@ -122,19 +122,17 @@ public class Main : MonoBehaviour
 			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
 			layers.Add (layer);
 
-//			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
-//				Random.value,
-//				Random.value,
-//				Random.value
-//			);
+			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
+				.5f * Mathf.Sin (.007f * Time.frameCount) + 1,
+				.5f * Mathf.Sin (.003f * Time.frameCount) + 1,
+				.5f * Mathf.Sin (.005f * Time.frameCount) + 1
+			);
 			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (//fd3a3a
 				253.0f / 255.0f,
 				58.0f / 255.0f,
 				28.0f / 255.0f
 			                                                        
 			);
-
-			print (tunnelSpeed);
 
 			if (Random.value < .3f + 30 * tunnelSpeed) {
 				Item item = new Item ();
