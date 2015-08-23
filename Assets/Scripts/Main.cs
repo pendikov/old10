@@ -58,7 +58,9 @@ public class Main : MonoBehaviour
 			itemPrefabs[i].AddComponent<BonusItem>();
 		}
 
-//		milonov = (Instantiate(milonovPrefab) as GameObject).GetComponent<Milonov>();
+		milonov = (Instantiate(milonovPrefab) as GameObject).GetComponent<Milonov>();
+		milonov.transform.parent = monsterLayer.obj.transform;
+		milonov.monster = monster.obj.GetComponent<Monster> ();
 	}
 
 	void Update ()
@@ -115,6 +117,7 @@ public class Main : MonoBehaviour
 		if (Time.frameCount % 8 == 0) {
 			Layer layer = new Layer (Instantiate (circlePrefab) as GameObject);
 			layers.Add (layer);
+
 //			layer.obj.GetComponent<SpriteRenderer> ().color = new Color (
 //				Random.value,
 //				Random.value,
@@ -184,11 +187,12 @@ public class Main : MonoBehaviour
 				Destroy (layers [i].obj);
 				layers.RemoveAt (i);
 			}
+
 	}
 
 }
 
-class Item
+class Item 
 {
 	public float radius = 1;
 	public GameObject obj;
@@ -207,7 +211,7 @@ class Layer
 
 }
 
-class H
+public class H
 {
 	public static float Hypot (float x, float y)
 	{

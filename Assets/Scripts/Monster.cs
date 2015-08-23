@@ -10,6 +10,12 @@ public class Monster : MonoBehaviour {
 	private const int BALL_POOL_SIZE = 10;
 	GameObject[] ballsPool = new GameObject[BALL_POOL_SIZE];
 
+	public bool canShoot {
+		get {
+			return ball != null;
+		}
+	}
+
 	void Start () {
 		ballPrefab = Resources.Load ("Prefabs/ball");
 		cam = GameObject.Find ("Main Camera").GetComponent<Camera> ();
@@ -33,7 +39,7 @@ public class Monster : MonoBehaviour {
 	}
 
 	void shoot(){
-		if (ball)
+		if (canShoot)
 			StartCoroutine("doShoot");
 	}
 
@@ -88,7 +94,7 @@ public class Monster : MonoBehaviour {
 		float currentTime = 0.0f;
 
 		Vector3 firstPosition = new Vector3 (0.0f, cam.ScreenToWorldPoint(new Vector3(0, -1)).y);		
-		Vector3 secondPosition = new Vector3 (0, 0);
+		Vector3 secondPosition = new Vector3 (0, -2.4f);
 
 		Transform thisTransform = transform;
 		thisTransform.position = firstPosition;

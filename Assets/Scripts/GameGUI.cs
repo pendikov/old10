@@ -12,17 +12,25 @@ public class GameGUI : MonoBehaviour {
 	public Texture2D restartButton;
 
 	public Font robotoRegular;
-	private GUIStyle myStyle;
+	private GUIStyle regularStyle;
+	public Font robotoBlack;
+	private GUIStyle blackStyle;
 
 	public Texture2D lifeFull;
 	public Texture2D lifeEmpty;
 
 	void Start () {
-		myStyle = new GUIStyle ();
-		myStyle.font = robotoRegular;
-		myStyle.normal.textColor = Color.white;
-		myStyle.fontSize = 60;
-		myStyle.alignment = TextAnchor.MiddleCenter;
+		blackStyle = new GUIStyle ();
+		blackStyle.font = robotoRegular;
+		blackStyle.normal.textColor = Color.white;
+		blackStyle.fontSize = 60;
+		blackStyle.alignment = TextAnchor.MiddleCenter;
+
+		regularStyle = new GUIStyle ();
+		regularStyle.font = robotoRegular;
+		regularStyle.normal.textColor = Color.white;
+		regularStyle.fontSize = 30;
+		regularStyle.alignment = TextAnchor.MiddleCenter;
 	}
 
 	void OnGUI() {
@@ -87,7 +95,16 @@ public class GameGUI : MonoBehaviour {
 			float y = (Screen.height - h) / 2.0f;
 			Rect rect = new Rect(x, y, w, h);
 
-			GUI.Label(rect, "GAME OVER", myStyle);
+			GUI.Label(rect, "GAME OVER", blackStyle);
+
+//			float w1 = (float)Screen.width;
+//			float h1 = 60.0f;
+//			float x1 = (Screen.width - w1) / 2.0f;
+//			float y1 = y + h + 20;
+//			Rect rect1 = new Rect(x1, y1, w1, h1);
+//			
+//			GUI.Label(rect1, "The faith is weak with this one", regularStyle);
+
 			showRestart();
 		}
 	}
