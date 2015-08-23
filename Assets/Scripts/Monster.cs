@@ -9,6 +9,7 @@ public class Monster : MonoBehaviour {
 	private int currentBall = 0;
 	private const int BALL_POOL_SIZE = 10;
 	GameObject[] ballsPool = new GameObject[BALL_POOL_SIZE];
+	private bool disappeared = false;
 
 	public bool canShoot {
 		get {
@@ -82,11 +83,15 @@ public class Monster : MonoBehaviour {
 	}
 
 	public void appear() {
+		disappeared = false;
 		StartCoroutine ("doAppear");
 	}
 
 	public void disappear() {
-		StartCoroutine ("doDisappear");
+		if (!disappeared) {
+			disappeared = true;
+			StartCoroutine ("doDisappear");
+		}
 	}
 
 	private IEnumerator doAppear() {
@@ -132,7 +137,8 @@ public class Monster : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if("milonov_ball" == coll.collider.name) {
+		print (coll.collider.name);
+		if("Milonov_ball" == coll.collider.name) {
 			getShot();
 		}
 	}
@@ -150,7 +156,7 @@ public class Monster : MonoBehaviour {
 
 		ren.color = Color.white;
 
-		Player.life -= 0.01f;
+		Player.life -= 0.05f;
 
 		yield return null;
 	}

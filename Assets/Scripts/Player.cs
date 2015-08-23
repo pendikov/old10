@@ -7,7 +7,6 @@ public class Player {
 	public const float MAX_CHARGE = 1.0f;
 	public const float MAX_LIFE = 1.0f;
 
-
 	public static int lives = MAX_LIVES;
 	public static int score = 0;
 

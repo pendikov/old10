@@ -16,6 +16,8 @@ public class GameGUI : MonoBehaviour {
 	public Font robotoBlack;
 	private GUIStyle blackStyle;
 
+	private GUIStyle scoreStyle;
+
 	public Texture2D lifeFull;
 	public Texture2D lifeEmpty;
 
@@ -31,6 +33,12 @@ public class GameGUI : MonoBehaviour {
 		regularStyle.normal.textColor = Color.white;
 		regularStyle.fontSize = 30;
 		regularStyle.alignment = TextAnchor.MiddleCenter;
+
+		scoreStyle = new GUIStyle ();
+		scoreStyle.font = robotoRegular;
+		scoreStyle.normal.textColor = Color.white;
+		scoreStyle.fontSize = 30;
+		scoreStyle.alignment = TextAnchor.MiddleCenter;
 	}
 
 	void OnGUI() {
@@ -107,6 +115,17 @@ public class GameGUI : MonoBehaviour {
 
 			showRestart();
 		}
+		//draw score
+		float scoreW = 150.0f;
+		float scoreH = 30.0f;
+		float sx = hx - 30 - scoreW;
+		float sy = 40.0f;
+		Rect srect = new Rect(sx, sy, scoreW, scoreH);
+		GUI.Label(srect, "SCORE: "+Player.score, scoreStyle);
+	}
+
+	void drawScore() {
+
 	}
 
 	private void showRestart() {

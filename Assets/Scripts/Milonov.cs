@@ -159,6 +159,8 @@ public class Milonov : Sprite
 
 		Vector3 currentScale = transform.localScale;
 		Vector3 newScale = Vector3.zero;
+
+		Player.score += 10;
 		
 		while (currentTime < randomTime) {
 			currentTime += Time.deltaTime;			
@@ -213,9 +215,7 @@ public class Milonov : Sprite
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		print (coll.collider.name);
 		if (coll.collider.name == "monster_ball") {
-			print ("hurt");
 			hurt ();
 		}
 
