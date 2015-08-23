@@ -7,6 +7,7 @@ public class Main : MonoBehaviour
 	UnityEngine.Object circlePrefab;
 	UnityEngine.Object milonovPrefab;
 	UnityEngine.Object monsterPrefab;
+	UnityEngine.Object fishPrefab;
 
 	const float TRACK_SPEED = .01f;
 
@@ -22,11 +23,12 @@ public class Main : MonoBehaviour
 	float tunnelSpeed = .0048f;//.001f;
 
 	Milonov milonov;
+	Milonov fish;
 
 	string[] itemPrefabNames = new string[]{
 //		"Prefabs/Milonov2",
 		"Prefabs/Items/cross",
-		"Prefabs/Items/fish",
+//		"Prefabs/Items/fish",
 		"Prefabs/Items/item1",
 		"Prefabs/Items/item2",
 		"Prefabs/Items/item3",
@@ -42,6 +44,7 @@ public class Main : MonoBehaviour
 		circlePrefab = Resources.Load ("Prefabs/Oval4");
 		milonovPrefab = Resources.Load ("Prefabs/Milonov2");
 		monsterPrefab = Resources.Load ("Prefabs/monstr@2x");
+		fishPrefab = Resources.Load ("Prefabs/Items/fish");
 
 		monsterLayer = new Layer (new GameObject ());
 		monsterLayer.pos = .95f;
@@ -54,13 +57,14 @@ public class Main : MonoBehaviour
 		for(int i=0; i<itemPrefabNames.Length;++i){
 			itemPrefabs[i] = Resources.Load(itemPrefabNames[i]) as GameObject;
 		}
-		for (int i=1; i<itemPrefabNames.Length; ++i) {
-			itemPrefabs[i].AddComponent<BonusItem>();
-		}
 
 		milonov = (Instantiate(milonovPrefab) as GameObject).GetComponent<Milonov>();
 		milonov.transform.parent = monsterLayer.obj.transform;
 		milonov.monster = monster.obj.GetComponent<Monster> ();
+
+		fish = (Instantiate (fishPrefab) as GameObject).GetComponent<Milonov> ();
+		fish.transform.parent = monsterLayer.obj.transform;
+		fish.monster = monster.obj.GetComponent<Monster> ();
 	}
 
 	void Update ()

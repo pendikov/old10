@@ -27,7 +27,7 @@ public class Milonov : Sprite
 			return hp <= 0.001f;
 		}}
 
-	private bool alreadyDead = false;
+	public bool alreadyDead = false;
 
 	public override Color color {
 		get {
@@ -61,28 +61,26 @@ public class Milonov : Sprite
 		}
 	}
 
-	void Start ()
+	public virtual void Start ()
 	{
 		color = new Color (1.0f, 1.0f, 1.0f, 0.0f);
 		StartCoroutine ("playerMustDie");
 	}
 
-	IEnumerator playerMustDie(){
+	public virtual IEnumerator playerMustDie(){
 		while (true) {
+			if(color.a > 0.5f){
+
+				GetComponent<MilonovShooter>().shootPlayer();
+			}
 			yield return new WaitForSeconds(Random.value * 5.0f);
-			GetComponent<MilonovShooter>().shootPlayer();
 		}
+		yield return null;
 	}
 	
-	void Update ()
+	public virtual void Update ()
 	{
 		star.transform.Rotate (new Vector3 (0, 0, starRotationSpeed*Time.deltaTime));
-//		if (Input.GetKey (KeyCode.H)) {
-//			dieHorribly();
-//		}
-//		if (Input.GetKey (KeyCode.V)) {
-//			show ();
-//		}
 		if(isDead && !alreadyDead){
 			dieHorribly();
 			respawn();
@@ -90,7 +88,6 @@ public class Milonov : Sprite
 	}
 
 	public void show() {
-//		color = Color.white;
 		StartCoroutine ("doShow");
 	}
 
@@ -108,7 +105,6 @@ public class Milonov : Sprite
 	}
 
 	public void hide() {
-//		color = new Color (0f, 0f, 0f, 0f);
 		StartCoroutine ("doHide");
 	}
 

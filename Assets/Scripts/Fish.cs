@@ -1,15 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Fish : Sprite {
+public class Fish : Milonov {
 
-	// Use this for initialization
-	void Start () {
-	
+	public override Color color {
+		get {
+			return GetComponent<SpriteRenderer> ().color;
+		}
+		set {
+			GetComponent<SpriteRenderer> ().color = value;
+		}
+	}
+
+	public override void Start () {
+		base.Start ();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	public override void Update () {
 		transform.Rotate(new Vector3(0.0f, 0.0f, -200.0f * Time.deltaTime));
+
+		if(isDead && !alreadyDead){
+			dieHorribly();
+			respawn();
+		}
 	}
 }

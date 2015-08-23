@@ -95,7 +95,7 @@ public class GameGUI : MonoBehaviour {
 			float y = (Screen.height - h) / 2.0f;
 			Rect rect = new Rect(x, y, w, h);
 
-			GUI.Label(rect, "GAME OVER", blackStyle);
+			GUI.Label(rect, "GAME OVER\nMOTHERFUCKER", blackStyle);
 
 //			float w1 = (float)Screen.width;
 //			float h1 = 60.0f;

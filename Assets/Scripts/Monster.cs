@@ -149,7 +149,7 @@ public class Monster : MonoBehaviour {
 
 		ren.color = Color.white;
 
-		Player.life -= 0.03f;
+		Player.life -= 0.01f;
 
 		yield return null;
 	}

@@ -5,22 +5,20 @@ public class BonusItem : Sprite {
 
 	public override float chargeBouns {
 		get {
-			return 0.001f;
+			return 0.01f;
 		}
 	}
 	
 	public override float lifeBouns {
 		get {
-			print ("lifebonus");
 			return 0.001f;
 		}
 	}
-	// Use this for initialization
+
 	void Start () {
 	
 	}
-	
-	// Update is called once per frame
+
 	void Update () {
 	
 	}
