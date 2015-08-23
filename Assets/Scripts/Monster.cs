@@ -131,6 +131,26 @@ public class Monster : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
+		if("ball(Clone)" == coll.collider.name) {
+			getShot();
+		}
+	}
 
+	void getShot() {
+		StartCoroutine("doGetShot");
+	}
+
+	IEnumerator doGetShot() {
+
+		SpriteRenderer ren = GetComponent<SpriteRenderer> ();
+		ren.color = Color.red;
+
+		yield return new WaitForSeconds (0.1f);
+
+		ren.color = Color.white;
+
+		Player.life -= 0.03f;
+
+		yield return null;
 	}
 }

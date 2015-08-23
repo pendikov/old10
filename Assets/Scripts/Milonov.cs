@@ -85,11 +85,7 @@ public class Milonov : Sprite
 //		}
 		if(isDead && !alreadyDead){
 			dieHorribly();
-		}
-		if (color.a <= 0.001f) {
-			if(Random.value > 0.8f){
-				respawn();
-			}
+			respawn();
 		}
 	}
 
@@ -129,7 +125,14 @@ public class Milonov : Sprite
 
 	public void respawn() {
 		hp = MAX_HP;
+		StartCoroutine ("doRespawn");
+	}
+
+	IEnumerator doRespawn() {
+
+		yield return new WaitForSeconds (Random.value * 4.0f + 2.0f);
 		alreadyDead = false;
+		transform.localPosition = H.RandomPointInCircle (5.0f);
 		moveRandomly ();
 	}
 
