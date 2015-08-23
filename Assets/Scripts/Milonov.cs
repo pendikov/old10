@@ -214,7 +214,7 @@ public class Milonov : Sprite
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if (coll.collider.name == "ball(Clone)") {
+		if (coll.collider.name == "Monster_ball)") {
 			hurt ();
 		}
 

@@ -131,7 +131,7 @@ public class Monster : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if("ball(Clone)" == coll.collider.name) {
+		if("Milonov_ball" == coll.collider.name) {
 			getShot();
 		}
 	}

@@ -51,6 +51,7 @@ public class MilonovShooter : Shooter {
 			return;
 		
 		ball = ballsPool[currentBall];
+		ball.name = "Milonov_ball";
 		currentBall = currentBall == BALL_POOL_SIZE - 1 ? 0 : currentBall + 1;
 		
 		ball.transform.parent = transform;

@@ -22,5 +22,6 @@ public class MonsterShooter : Shooter {
 			return;
 		Player.charge -= 0.01f;
 		base.loadWeapon ();
+		ball.name = "Monster_ball";
 	}
 }
