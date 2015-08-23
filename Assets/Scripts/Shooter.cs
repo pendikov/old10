@@ -76,15 +76,16 @@ public class Shooter : MonoBehaviour {
 	}
 	
 	public virtual void loadWeapon() {
-		if (ball)
-			return;
-		
-		ball = ballsPool[currentBall];
-		currentBall = currentBall == BALL_POOL_SIZE - 1 ? 0 : currentBall + 1;
-		
-		ball.transform.parent = transform;
-		ball.transform.localPosition = new Vector3 (0.84f, 0.57f, 0);
-		ball.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
-		ball.GetComponent<SpriteRenderer> ().color = Color.white;
+//		if (ball)
+//			return;
+//		
+//		ball = ballsPool[currentBall];
+//		ball.name = "123";
+//		currentBall = currentBall == BALL_POOL_SIZE - 1 ? 0 : currentBall + 1;
+//		
+//		ball.transform.parent = transform;
+//		ball.transform.localPosition = new Vector3 (0.84f, 0.57f, 0);
+//		ball.transform.localScale = new Vector3 (1.0f, 1.0f, 1.0f);
+//		ball.GetComponent<SpriteRenderer> ().color = Color.white;
 	}
 }

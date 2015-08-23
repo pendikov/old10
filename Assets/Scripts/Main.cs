@@ -134,7 +134,7 @@ public class Main : MonoBehaviour
 			                                                        
 			);
 
-			print (tunnelSpeed);
+//			print (tunnelSpeed);
 
 			if (Random.value < .3f + 30 * tunnelSpeed) {
 				Item item = new Item ();

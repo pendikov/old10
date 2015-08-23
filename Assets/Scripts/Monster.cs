@@ -51,7 +51,7 @@ public class Monster : MonoBehaviour {
 
 		GameObject tempBall = ball;
 		ball = null;
-
+		tempBall.name = "monster_ball";
 		Vector3 secondPosition = cam.ScreenToWorldPoint (Input.mousePosition);
 		while (currentTime <= time)
 		{
@@ -73,6 +73,7 @@ public class Monster : MonoBehaviour {
 		Player.charge -= 0.01f;
 
 		ball = ballsPool[currentBall];
+		ball.name = "monster_ball";
 		currentBall = currentBall == BALL_POOL_SIZE - 1 ? 0 : currentBall + 1;
 
 		ball.transform.parent = transform;
@@ -131,7 +132,7 @@ public class Monster : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if("Milonov_ball" == coll.collider.name) {
+		if("milonov_ball" == coll.collider.name) {
 			getShot();
 		}
 	}

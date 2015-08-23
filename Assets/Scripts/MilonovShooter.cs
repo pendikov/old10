@@ -7,6 +7,10 @@ public class MilonovShooter : Shooter {
 
 	public override void Start () {
 		base.Start ();
+
+		foreach (var ball in ballsPool) {
+			ball.name = "milonov_ball";
+		}
 	}
 
 	public void shootPlayer() {
