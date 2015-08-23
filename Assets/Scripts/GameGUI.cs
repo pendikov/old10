@@ -22,26 +22,27 @@ public class GameGUI : MonoBehaviour {
 	public Texture2D lifeEmpty;
 
 	void Start () {
+
+	}
+
+	void OnGUI() {
 		blackStyle = new GUIStyle ();
 		blackStyle.font = robotoRegular;
 		blackStyle.normal.textColor = Color.white;
 		blackStyle.fontSize = 60;
 		blackStyle.alignment = TextAnchor.MiddleCenter;
-
+		
 		regularStyle = new GUIStyle ();
 		regularStyle.font = robotoRegular;
 		regularStyle.normal.textColor = Color.white;
 		regularStyle.fontSize = 30;
 		regularStyle.alignment = TextAnchor.MiddleCenter;
-
+		
 		scoreStyle = new GUIStyle ();
 		scoreStyle.font = robotoRegular;
 		scoreStyle.normal.textColor = Color.white;
 		scoreStyle.fontSize = 30;
 		scoreStyle.alignment = TextAnchor.MiddleCenter;
-	}
-
-	void OnGUI() {
 
 		float batteryRightMargin = 20;
 		float batteryWidth = battery.width / 2.0f;
@@ -116,7 +117,23 @@ public class GameGUI : MonoBehaviour {
 ////			
 ////			GUI.Label(rect1, "The faith is weak with this one", regularStyle);
 //
-			showRestart();
+			float rbx = 30;
+			float rby = 30;
+			float rbw = restartButton.width;
+			float rbh = restartButton.height;
+			Rect rbrect = new Rect (rbx, rby, rbw, rbh);
+			
+			Color color = GUI.color;
+			
+			if (rbrect.Contains (Event.current.mousePosition)) {
+				color.a = 0.5f;
+				if (Event.current.type == EventType.MouseUp) {
+					GameManager.restart();
+				}
+			}
+			GUI.color = color;
+			GUI.DrawTexture (rbrect, restartButton);
+			GUI.color = Color.white;
 		}
 		//draw score
 		float scoreW = 150.0f;
@@ -125,26 +142,9 @@ public class GameGUI : MonoBehaviour {
 		float sy = 40.0f;
 		Rect srect = new Rect(sx, sy, scoreW, scoreH);
 		GUI.Label(srect, "SCORE: "+Player.score, scoreStyle);
-	}
 
-	private void showRestart() {
-		float rbx = 30;
-		float rby = 30;
-		float rbw = restartButton.width;
-		float rbh = restartButton.height;
-		Rect rbrect = new Rect (rbx, rby, rbw, rbh);
-		
-		Color color = GUI.color;
-		
-		if (rbrect.Contains (Event.current.mousePosition)) {
-			color.a = 0.5f;
-			if (Event.current.type == EventType.MouseUp) {
-				GameManager.restart();
-			}
-		}
-		GUI.color = color;
-		GUI.DrawTexture (rbrect, restartButton);
-		GUI.color = Color.white;
 
 	}
+
+	private void showRestart() {}
 }

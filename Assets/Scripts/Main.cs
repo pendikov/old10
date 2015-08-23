@@ -94,8 +94,6 @@ public class Main : MonoBehaviour
 		frame++;
 
 		tunnelSpeed += .000003f;
-
-		print ("tunnelSpeed: "+tunnelSpeed);
 //		if (tunnelSpeed >= .015)
 //			GameObject.Find ("Main Camera").GetComponent<Camera> ().clearFlags = CameraClearFlags.Depth;
 

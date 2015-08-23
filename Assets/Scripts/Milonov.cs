@@ -215,7 +215,8 @@ public class Milonov : Sprite
 	}
 
 	void OnCollisionEnter2D(Collision2D coll) {
-		if(coll.collider.GetComponent<Ball>().playerShoot && coll.collider.GetComponent<Ball>().didShoot) {
+		Ball ball = coll.collider.GetComponent<Ball> ();
+		if(ball && ball.playerShoot && ball.didShoot) {
 			hurt ();
 		}
 

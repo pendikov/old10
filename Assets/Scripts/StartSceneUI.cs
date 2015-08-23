@@ -7,12 +7,14 @@ public class StartSceneUI : MonoBehaviour {
 	public Texture2D circlesTexture;
 
 	void Start() {
-		GUI.skin.button.normal.background = startButton;
-		GUI.skin.button.hover.background = startButton;
+
 
 	}
 
 	void OnGUI () {
+		GUI.skin.button.normal.background = startButton;
+		GUI.skin.button.hover.background = startButton;
+
 		float cx = (Screen.width - circlesTexture.width) / 2.0f;
 		float cy = (Screen.height - circlesTexture.height) / 2.0f;
 		Rect circlesRect = new Rect(cx, cy, circlesTexture.width, circlesTexture.height);

@@ -1,0 +1,39 @@
+Mono path[0] = 'E:/unity/old10/game_dev_Data/Managed'
+Mono path[1] = 'E:/unity/old10/game_dev_Data/Mono'
+Mono config path = 'E:/unity/old10/game_dev_Data/Mono/etc'
+PlayerConnection initialized from E:/unity/old10/game_dev_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55482
+Multi-casting "[IP] 192.168.56.1 [Port] 55482 [Flags] 2 [Guid] 1066195161 [EditorId] 1280770343 [Version] 1048832 [Id] WindowsPlayer(dan) [Debug] 0" to [225.0.0.222:54997]...
+PlayerConnection already initialized - listening to [192.168.56.1:55482]
+Initialize engine version: 5.1.2f1 (afd2369b692a)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: AMD Radeon HD 7640G + 7600M Dual Graphics (ID=0x9903)
+    Vendor:   ATI
+    VRAM:     2510 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: E:\unity\old10\game_dev_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading E:\unity\old10\game_dev_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: E:\unity\old10\game_dev_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading E:\unity\old10\game_dev_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: E:\unity\old10\game_dev_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading E:\unity\old10\game_dev_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: E:\unity\old10\game_dev_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading E:\unity\old10\game_dev_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: E:\unity\old10\game_dev_Data\Managed\UnityEngine.Analytics.dll (this message is harmless)
+Loading E:\unity\old10\game_dev_Data\Managed\UnityEngine.Analytics.dll into Unity Child Domain
+- Completed reload, in  0.148 seconds
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+Platform assembly: E:\unity\old10\game_dev_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: E:\unity\old10\game_dev_Data\Managed\System.dll (this message is harmless)
+ArgumentException: You can only call GUI functions from inside OnGUI.
+  at UnityEngine.GUIUtility.CheckOnGUI () [0x00016] in C:\buildslave\unity\build\artifacts\generated\common\runtime\GUIUtilityBindings.gen.cs:227 
+  at UnityEngine.GUI.get_skin () [0x00000] in C:\buildslave\unity\build\artifacts\generated\common\runtime\GUIBindings.gen.cs:54 
+  at StartSceneUI.Start () [0x00000] in E:\unity\old10\Assets\Scripts\StartSceneUI.cs:10 
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/GUIUtilityBindings.gen.cs Line: 227)
+
