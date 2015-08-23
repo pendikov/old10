@@ -12,17 +12,21 @@ public class Milonov : Sprite
 
 	public float hp = 0.0f;
 
-	public Monster monster;
+	private Monster _monster;
+	public Monster monster {
+		get {return _monster;}
+		set {
+			if(_monster != value) {
+				_monster = value;
+				GetComponent<MilonovShooter>().monster = value;
+			}
+		}
+	}
 
 	public bool isDead { get {
 			return hp <= 0.001f;
 		}}
 
-//	public bool shouldDie {
-//		get {
-//			return hp <= 0.001f;
-//		}
-//	}
 	private bool alreadyDead = false;
 
 	public override Color color {
@@ -60,25 +64,30 @@ public class Milonov : Sprite
 	void Start ()
 	{
 		color = new Color (1.0f, 1.0f, 1.0f, 0.0f);
+		StartCoroutine ("playerMustDie");
+	}
+
+	IEnumerator playerMustDie(){
+		while (true) {
+			yield return new WaitForSeconds(Random.value * 5.0f);
+			GetComponent<MilonovShooter>().shootPlayer();
+		}
 	}
 	
 	void Update ()
 	{
 		star.transform.Rotate (new Vector3 (0, 0, starRotationSpeed*Time.deltaTime));
-		if (Input.GetKey (KeyCode.H)) {
-			dieHorribly();
-		}
-		if (Input.GetKey (KeyCode.V)) {
-			show ();
-		}
+//		if (Input.GetKey (KeyCode.H)) {
+//			dieHorribly();
+//		}
+//		if (Input.GetKey (KeyCode.V)) {
+//			show ();
+//		}
 		if(isDead && !alreadyDead){
 			dieHorribly();
 		}
-		print (isDead);
 		if (color.a <= 0.001f) {
-			print (1);
 			if(Random.value > 0.8f){
-				print(2);
 				respawn();
 			}
 		}

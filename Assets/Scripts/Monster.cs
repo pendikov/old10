@@ -129,4 +129,8 @@ public class Monster : MonoBehaviour {
 		gameObject.GetComponent<SpriteRenderer> ().color = new Color (0.0f, 0.0f, 0.0f, 0.0f);
 		yield return null;
 	}
+
+	void OnCollisionEnter2D(Collision2D coll) {
+
+	}
 }

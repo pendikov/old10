@@ -160,7 +160,7 @@ public class Main : MonoBehaviour
 					    < monster.radius + item.radius) {
 						item.obj.GetComponent<Sprite> ().color = new Color (1, 0, 0, 1);
 						Player.charge += item.obj.GetComponent<Sprite> ().chargeBouns;
-						Player.life += item.obj.GetComponent<Sprite> ().lifeBouns;
+//						Player.life += item.obj.GetComponent<Sprite> ().lifeBouns;
 					}
 				}
 				if (layer.pos > 1)
